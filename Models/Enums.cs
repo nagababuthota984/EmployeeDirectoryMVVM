@@ -1,0 +1,37 @@
+﻿namespace EmployeeDirectoryMVVM.Models
+{
+    public class Enums
+    {
+        public enum EmployementType
+        {
+            Contract,
+            Permanent
+        }
+        public enum FilterCategories
+        {
+            Name,
+            ContactNumber,
+            Salary,
+            Experience,
+            SkypeId,
+            Age
+        }
+        public enum GeneralFilterCategories
+        {
+            Department,
+            JobTitle
+        }
+        public enum Gender
+        {
+            Male,
+            Female,
+            Nonbinary
+        }
+        public enum Status
+        {
+            Existing,
+            Resigned
+        }
+
+    }
+}

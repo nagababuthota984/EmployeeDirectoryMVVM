@@ -1,0 +1,157 @@
+﻿<UserControl x:Class="EmployeeDirectoryMVVM.Views.HomeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:converters="clr-namespace:EmployeeDirectoryMVVM.Converters" 
+             xmlns:viewmodels="clr-namespace:EmployeeDirectoryMVVM.ViewModels"
+             mc:Ignorable="d" 
+             MinHeight="450" MinWidth="800">
+    <UserControl.Resources>
+        <converters:JobTitleToColorConverter x:Key="Ed.Converters.JobToColorConv"/>
+        <viewmodels:HomeViewModel x:Key="HomeViewModel"/>
+    </UserControl.Resources>
+
+    <Grid>
+        <!--avoid dock panel in most of the cases-->
+        <DockPanel x:Name="Main" >
+            <Grid Margin="0 20 0 0"  DockPanel.Dock="Top" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="70"></RowDefinition>
+                    <RowDefinition ></RowDefinition>
+                </Grid.RowDefinitions>
+                <Image HorizontalAlignment="Left" Source="/Images/saketa-logo.jpg" Width="170" />
+                <WrapPanel  Margin="20 0 0 0" Orientation="Vertical" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left">
+                    <TextBlock FontSize="{StaticResource Ed.FontSize.PrimaryFontSize}" Foreground="{StaticResource ED.Colors.PrimaryColour}"  Text="Employee Directory"/>
+                    <TextBlock FontSize="{StaticResource Ed.FontSize.SecondaryFontSize}" Text="The Ultimate People Directory Experience"/>
+                </WrapPanel>
+                <WrapPanel  Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right">
+                    <TextBlock FontSize="{StaticResource Ed.FontSize.GreetUserFontSize}" VerticalAlignment="Bottom" Foreground="{StaticResource ED.Colors.PrimaryColour}"  Text="Welcome,"/>
+                    <TextBlock FontSize="{StaticResource Ed.FontSize.GreetUserFontSize}" VerticalAlignment="Bottom" Text=" Andrew Philips"/>
+                    <Ellipse Margin="3 0 10 0" Width="50" Height="50" Grid.Column="2" >
+                        <Ellipse.Fill>
+                            <ImageBrush  ImageSource="/Images/andrew-philips.png"/>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                </WrapPanel>
+                <Separator Margin="10" Grid.Row="1" Grid.ColumnSpan="3"/>
+            </Grid>
+
+            <WrapPanel  Margin="20 30 0 0"  DockPanel.Dock="Left" Orientation="Vertical">
+                <TextBlock Margin="0 0 0 3" FontWeight="{StaticResource Ed.FontWeight.DemiBold}" FontSize="{StaticResource Ed.FontSize.SecondaryFontSize}" Text="Departments"/>
+                <ListBox Name="DepartmentsDiv" 
+                     SelectionMode="Single" 
+                     SelectionChanged="FiltersClickHandler" 
+                     BorderBrush="Black" BorderThickness="0 0 0 1">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontSize="{StaticResource Ed.FontSize.SmallHeadingFontSize}" Text="{Binding Name}"/>
+                                <TextBlock FontSize="{StaticResource Ed.FontSize.SmallHeadingFontSize}" Text="{Binding Count,StringFormat={} ({0}) }"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <TextBlock Margin="0 5 0 3" FontWeight="{StaticResource Ed.FontWeight.DemiBold}" FontSize="{StaticResource Ed.FontSize.SecondaryFontSize}" Text="Job Titles"/>
+                <ListBox Name="JobTitlesDiv"   BorderBrush="White"  SelectionMode="Single" SelectionChanged="FiltersClickHandler">
+                    <ListBox.ItemTemplate >
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontSize="{StaticResource Ed.FontSize.SmallHeadingFontSize}" Text="{Binding Path=Name}"></TextBlock>
+                                <TextBlock FontSize="{StaticResource Ed.FontSize.SmallHeadingFontSize}" Text="{Binding Path=Count, StringFormat={} ({0})}"></TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <Button HorizontalAlignment="Left" Foreground="{StaticResource ED.Colors.PrimaryColour}" Background="white" BorderBrush="White" Content="view more"/>
+            </WrapPanel>
+            <Grid Margin="20 5 0 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="70"></RowDefinition>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="210"/>
+                    <ColumnDefinition Width="230"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button  Grid.Column="2" Content="Add Employee" Style="{StaticResource Ed.Buttons.AddEmp}" Click="OpenAddEmployeeForm"  HorizontalAlignment="Right"/>
+                <Grid DataContext="{Binding Source={StaticResource HomeViewModel}}" Margin="0 0 15 0" Grid.Row="1" Grid.ColumnSpan="3" ShowGridLines="True">
+                    <DataGrid ItemsSource="{Binding Employees, Mode=OneWay}" Margin="0 0 0 20" Style="{StaticResource Ed.DataGridStyle}"  Name="EmployeeCards" >
+                        <DataGrid.Columns  >
+                            <DataGridTemplateColumn Header="Name">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock>
+                                            <Run Text="{Binding FirstName}"/>
+                                            <Run Text="{Binding LastName}"/>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+
+                                <!--<DataGridTextColumn.Binding>
+                                    <MultiBinding StringFormat="{}{0} {1}">
+                                        <Binding Path="FirstName"/>
+                                        <Binding Path="LastName"/>
+                                    </MultiBinding>
+                                </DataGridTextColumn.Binding>-->
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Email" Binding="{Binding Email}"/>
+                            <DataGridTextColumn Header="Age" Binding="{Binding Dob, Converter={converters:DobToAgeConverter}, StringFormat={}{0} years old}"/>
+                            <DataGridTextColumn CellStyle="{StaticResource Ed.DataGrid.GenderCellStyle}" Header="Gender" Binding="{Binding Gender}"/>
+                            <DataGridTextColumn Header="JobTitle" Binding="{Binding Path=JobTitle}">
+                                <DataGridTextColumn.ElementStyle >
+                                    <Style TargetType="TextBlock" >
+                                        <Setter Property="Background" Value="{Binding JobTitle, Converter={StaticResource Ed.Converters.JobToColorConv}}"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                        <Setter Property="Height" Value="20"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Department" Binding="{Binding Department}"/>
+                            <DataGridTextColumn Header="Experience" Binding="{Binding ExperienceInYears}"/>
+                            <DataGridTextColumn Header="Contact" Binding="{Binding ContactNumber}"/>
+                            <DataGridTextColumn  Header="Salary" Binding="{Binding Salary}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock" >
+                                        <Setter Property="Foreground" Value="{Binding Salary, Converter={converters:SalaryRangeConverter}}"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTemplateColumn Header="Edit">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Style="{StaticResource Ed.Buttons.EditStyle}" Content="Edit Details" Click="EditEmployeeDetails"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Delete">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Style="{StaticResource Ed.Buttons.DeleteStyle}" Content="Delete" Click="DeleteEmployee"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+                <WrapPanel Orientation="Horizontal" Style="{StaticResource Ed.AdvancedFilterStyle}" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <TextBlock Margin="0 5 5 0" Text="Search:"/>
+                    <TextBox Name="Search"  KeyUp="HandleSearchKeyUp"  Padding="5" Height="30" Width="150" />
+                </WrapPanel>
+                <WrapPanel Orientation="Horizontal" Style="{StaticResource Ed.AdvancedFilterStyle}" VerticalAlignment="Center" Grid.Column="1" HorizontalAlignment="Center">
+                    <TextBlock Margin="0 5 5 0" Text="Filter By:"/>
+                    <ComboBox Name="Filter" Padding="6" Height="30" Width="150" SelectionChanged="FilterSelectionChanged" />
+                </WrapPanel>
+            </Grid>
+        </DockPanel>
+        <ContentControl Visibility="Collapsed" Name="UserControlSpace" Width="Auto"/>
+
+
+    </Grid>
+</UserControl>
