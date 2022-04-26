@@ -92,5 +92,11 @@
         <Setter Property="Background" Value="OrangeRed"></Setter>
         <Setter Property="Foreground" Value="White"></Setter>
     </Style>
+    <DataTemplate x:Key="GeneralFilterTemplate">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock FontSize="{StaticResource Ed.FontSize.SmallHeadingFontSize}" Text="{Binding Path=Name}"></TextBlock>
+            <TextBlock FontSize="{StaticResource Ed.FontSize.SmallHeadingFontSize}" Text="{Binding Path=Count, StringFormat={} ({0})}"></TextBlock>
+        </StackPanel>
+    </DataTemplate>
 
 </ResourceDictionary>

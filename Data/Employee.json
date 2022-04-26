@@ -135,18 +135,33 @@
     "EmploymentType": 1
   },
   {
-    "FirstName": "Viswak",
-    "LastName": "Sena",
-    "PreferredName": null,
-    "Email": "viswa@gmail.com",
-    "Dob": "0001-01-01T00:00:00",
+    "FirstName": "Nagababu ",
+    "LastName": "Thota",
+    "PreferredName": "Nagababu  Thota",
+    "Email": "nagababu@gmail.com",
+    "Dob": "2000-11-12T00:00:00",
     "Gender": 0,
-    "Status": 1,
-    "JobTitle": "Talent Magnet Jr.",
-    "Department": "HR Department",
-    "ExperienceInYears": 3,
-    "ContactNumber": 9101929221,
-    "Salary": 23000.0,
-    "EmploymentType": 0
+    "Status": 0,
+    "JobTitle": "Developer",
+    "Department": "IT Department",
+    "ExperienceInYears": 0,
+    "ContactNumber": 8464832529,
+    "Salary": 47000.0,
+    "EmploymentType": 1
+  },
+  {
+    "FirstName": "Ravi",
+    "LastName": "Chandra",
+    "PreferredName": "Ravi Chandra",
+    "Email": "ravichandra@gmail.com",
+    "Dob": "2000-11-10T00:00:00",
+    "Gender": 0,
+    "Status": 0,
+    "JobTitle": "Developer",
+    "Department": "IT Department",
+    "ExperienceInYears": 5,
+    "ContactNumber": 8464832529,
+    "Salary": 50000.0,
+    "EmploymentType": 1
   }
 ]

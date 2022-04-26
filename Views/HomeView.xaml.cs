@@ -20,12 +20,11 @@ namespace EmployeeDirectoryMVVM.Views
         public static EmployeeDetailsView EmpDetailsView;
         public Employee SelectedEmployee = null;
 
+
         public HomeView()
         {
             InitializeComponent();
             //EmployeeCards.ItemsSource = filteredData;
-            DepartmentsDiv.ItemsSource = EmployeeData.Departments;
-            JobTitlesDiv.ItemsSource = EmployeeData.JobTitles;
             Filter.ItemsSource = Enum.GetNames(typeof(FilterCategories));
             Filter.SelectedValue = Filter.Items[0];
             EmpDetailsView = new EmployeeDetailsView();
@@ -34,16 +33,16 @@ namespace EmployeeDirectoryMVVM.Views
         public void FiltersClickHandler(object sender, SelectionChangedEventArgs e)
         {
             var lbox = sender as ListBox;
-            if (lbox.Name.Equals("DepartmentsDiv", StringComparison.OrdinalIgnoreCase))
-            {
-                var dept = (GeneralFilter)lbox.SelectedItem;
-                EmployeeCards.ItemsSource = GetEmployeesByDept(dept.Name);
-            }
-            else
-            {
-                var jobTitle = (GeneralFilter)lbox.SelectedItem;
-                EmployeeCards.ItemsSource = GetEmployeesByJobTitle(jobTitle.Name);
-            }
+            //if (lbox.Name.Equals("DepartmentsDiv", StringComparison.OrdinalIgnoreCase))
+            //{
+            //    var dept = (GeneralFilter)lbox.SelectedItem;
+            //    EmployeeCards.ItemsSource = GetEmployeesByDept(dept.Name);
+            //}
+            //else
+            //{
+            //    var jobTitle = (GeneralFilter)lbox.SelectedItem;
+            //    EmployeeCards.ItemsSource = GetEmployeesByJobTitle(jobTitle.Name);
+            //}
         }
         private List<Employee> GetEmployeesByJobTitle(string filterValue)
         {

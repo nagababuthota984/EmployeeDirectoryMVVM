@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using static EmployeeDirectoryMVVM.Models.Enums;
 
 namespace EmployeeDirectoryMVVM.Data
 {
