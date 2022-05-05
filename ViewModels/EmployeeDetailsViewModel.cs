@@ -1,6 +1,8 @@
 ﻿using EmployeeDirectoryMVVM.Models;
+using EmployeeDirectoryMVVM.Views;
 using System;
 using System.ComponentModel;
+using System.Windows.Input;
 
 namespace EmployeeDirectoryMVVM.ViewModels
 {
@@ -8,25 +10,25 @@ namespace EmployeeDirectoryMVVM.ViewModels
     {
         #region Fields
         private Employee _employee;
-        private string _okButtonContent;
         #endregion
         #region Properties
-       
-        public string OkButtonContent
-        {
-            get { return _okButtonContent; }
-            set { _okButtonContent = value; OnPropertyChange(nameof(OkButtonContent)); }
-        }
+        public ICommand CancelCommand { get; set; }
         public Employee EmployeeContext 
         { 
             get { return _employee; } 
             set { _employee = value; OnPropertyChange(nameof(EmployeeContext)); }
         }
         #endregion
-
-        public EmployeeDetailsViewModel() : base("EmployeeDetailsViewModel")
+        
+        public EmployeeDetailsViewModel(Employee selectedEmployee)
         {
+            EmployeeContext = selectedEmployee;
+            CancelCommand = new CommandBase(OnCancel);
         }
 
+        private void OnCancel()
+        {
+            MainWindowViewModel.CurrentView = new HomeView();
+        }
     }
 }

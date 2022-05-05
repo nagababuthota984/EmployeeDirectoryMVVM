@@ -2,52 +2,47 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:viewmodels="clr-namespace:EmployeeDirectoryMVVM.ViewModels"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.DataContext>
-        <viewmodels:EmployeeDetailsViewModel/>
-    </UserControl.DataContext>
-    <Grid DataContext="{Binding EmployeeContext}"  HorizontalAlignment="Left" Margin="20" >
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" >
+
+    <Grid DataContext="{Binding EmployeeContext}"  HorizontalAlignment="Left" Margin="20" Grid.IsSharedSizeScope="True" >
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200" />
-            <ColumnDefinition Width="200"></ColumnDefinition>
-            <ColumnDefinition Width="200"></ColumnDefinition>
+            <ColumnDefinition  SharedSizeGroup="colGroup" />
+            <ColumnDefinition   SharedSizeGroup="colGroup"/>
+            <ColumnDefinition Width="Auto"  SharedSizeGroup="colGroup"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="90"></RowDefinition>
-            <RowDefinition Height="68"></RowDefinition>
-            <RowDefinition Height="68"></RowDefinition>
-            <RowDefinition Height="68"></RowDefinition>
-            <RowDefinition Height="68"></RowDefinition>
+            <RowDefinition   SharedSizeGroup="rowGroup"/>
+            <RowDefinition   SharedSizeGroup="rowGroup"/>
+            <RowDefinition   SharedSizeGroup="rowGroup"/>
+            <RowDefinition Height="Auto" SharedSizeGroup="rowGroup"/>
+            <RowDefinition  SharedSizeGroup="rowGroup"/>
         </Grid.RowDefinitions>
-        <TextBlock Name="Heading" Margin="0 10 0 20" Style="{StaticResource Ed.PrimaryHeading}" HorizontalAlignment="Left" VerticalAlignment="Center" />
-        <Separator Margin="0 0 0 10" Grid.ColumnSpan="3" VerticalAlignment="Bottom" />
-        <TextBlock  Style="{StaticResource Ed.Labels.FormLabelText}" Grid.Row="1" Text="First Name" />
-        <TextBox Text="{Binding FirstName}"  Style="{StaticResource Ed.TextBoxStyle}" Name="fname" Grid.Row="1"/>
-        <TextBlock Style="{StaticResource Ed.Labels.FormLabelText}" Grid.Row="2" Text="Email " />
+        <TextBlock Name="Heading" Style="{StaticResource Ed.PrimaryHeading}" HorizontalAlignment="Left" VerticalAlignment="Center" />
+        <Separator Margin="0 0 0 10" Grid.ColumnSpan="3" VerticalAlignment="Bottom" Height="1" />
+        <TextBlock  Style="{StaticResource Ed.Labels.FormLabelText}" Grid.Row="1" Text="First Name" Grid.ColumnSpan="2" />
+        <TextBox Text="{Binding FirstName}"  Style="{StaticResource Ed.TextBoxStyle}" Name="fname" Grid.Row="1" />
+        <TextBlock Style="{StaticResource Ed.Labels.FormLabelText}" Grid.Row="2" Text="Email " Grid.ColumnSpan="2" />
         <TextBox Text="{Binding Email}" Style="{StaticResource Ed.TextBoxStyle}" Name="email" IsEnabled="False" Grid.Row="2"/>
-        <TextBlock Style="{StaticResource Ed.Labels.FormLabelText }" Grid.Row="3" Text="Job Title"/>
+        <TextBlock Style="{StaticResource Ed.Labels.FormLabelText }" Grid.Row="3" Text="Job Title" Grid.ColumnSpan="2"/>
         <TextBox Text="{Binding JobTitle}" Style="{StaticResource Ed.TextBoxStyle}" Name="jobtitle" Grid.Row="3"/>
-        <TextBlock Style="{StaticResource Ed.Labels.FormLabelText }" Grid.Row="1" Grid.Column="1" Text="Department"/>
+        <TextBlock Style="{StaticResource Ed.Labels.FormLabelText }" Grid.Row="1" Grid.Column="1" Text="Department" Grid.ColumnSpan="2"/>
         <TextBox Text="{Binding Department}" Style="{StaticResource Ed.TextBoxStyle}" Name="department" Grid.Row="1" Grid.Column="1"/>
-        <TextBlock Style="{StaticResource Ed.Labels.FormLabelText }" Grid.Row="2" Grid.Column="1" Text="Last Name"/>
-        <TextBox Text="{Binding LastName}" Style="{StaticResource Ed.TextBoxStyle}" Name="lname" Grid.Row="2" Grid.Column="1"></TextBox>
-        <TextBlock Style="{StaticResource Ed.Labels.FormLabelText }" Grid.Row="3" Grid.Column="1" Text="Date Of Birth"/>
-        <DatePicker SelectedDate="{Binding Dob}" Name="dob" Margin="0 0 10 0" Height="30" Padding="5" Grid.Row="3" Grid.Column="1"></DatePicker>
-        <TextBlock Style="{StaticResource Ed.Labels.FormLabelText}" Grid.Row="1" Grid.Column="2" Text="Salary"/>
-        <TextBox Text="{Binding Salary}" Style="{StaticResource Ed.TextBoxStyle}" Name="salary"  Grid.Row="1" Grid.Column="2"></TextBox>
+        <TextBlock Style="{StaticResource Ed.Labels.FormLabelText }" Grid.Row="2" Grid.Column="1" Text="Last Name" Grid.ColumnSpan="2"/>
+        <TextBox Text="{Binding LastName}" Style="{StaticResource Ed.TextBoxStyle}" Name="lname" Grid.Row="2" Grid.Column="1" Height="30"/>
+        <TextBlock Style="{StaticResource Ed.Labels.FormLabelText }" Grid.Row="3" Grid.Column="1" Text="Date Of Birth" Grid.ColumnSpan="2"/>
+        <DatePicker SelectedDate="{Binding Dob}" Name="dob" Padding="5" Grid.Row="3" Grid.Column="1" Height="30" Margin="0 18 10 10"/>
+        <TextBlock Style="{StaticResource Ed.Labels.FormLabelText}" Grid.Row="1" Grid.Column="2" Text="Salary" />
+        <TextBox Text="{Binding Salary}" Style="{StaticResource Ed.TextBoxStyle}" Name="salary"  Grid.Row="1" Grid.Column="2"/>
         <TextBlock Style="{StaticResource Ed.Labels.FormLabelText }" Grid.Row="2" Grid.Column="2" Text="Experience in Years"/>
-        <TextBox Text="{Binding ExperienceInYears}" Style="{StaticResource Ed.TextBoxStyle}"  Name="experience"  Grid.Row="2" Grid.Column="2"></TextBox>
+        <TextBox Text="{Binding ExperienceInYears}" Style="{StaticResource Ed.TextBoxStyle}"  Name="experience"  Grid.Row="2" Grid.Column="2"/>
         <TextBlock Style="{StaticResource Ed.Labels.FormLabelText }" Grid.Row="3" Grid.Column="2" Text="Contact Number" />
         <TextBox Text="{Binding ContactNumber}" Style="{StaticResource Ed.TextBoxStyle}" Name="contactNumber"  Grid.Row="3" Grid.Column="2"/>
 
-        <Button Name="SubmitBtn"  Style="{StaticResource Ed.Buttons.AddEmp}" Grid.Row="5" Grid.Column="1" Height="30" Width="190" Margin="0 0 10 0" />
+        <Button Name="SubmitBtn"  Style="{StaticResource Ed.Buttons.AddEmp}" Grid.Row="4" Grid.Column="1" />
         <Button  Name="CancelBtn"
-                 DataContext="{StaticResource MainVm}"
-                 Command="{Binding NavigateToEditEmpView}"
-                 Content="Cancel"  Style="{StaticResource Ed.Buttons.DeleteStyle}" Height="30" Grid.Row="5" Grid.Column="2" Width="190" Margin="0 0 10 0" />
+                 Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl},Path=DataContext.CancelCommand}"
+                 Content="Cancel"  Style="{StaticResource Ed.Buttons.Cancel}" Grid.Row="4" Grid.Column="2" />
 
     </Grid>
 </UserControl>

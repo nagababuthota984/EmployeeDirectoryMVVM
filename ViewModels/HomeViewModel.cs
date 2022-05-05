@@ -1,7 +1,7 @@
 ﻿using EmployeeDirectoryMVVM.Data;
 using EmployeeDirectoryMVVM.Models;
+using EmployeeDirectoryMVVM.Views;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -12,7 +12,6 @@ namespace EmployeeDirectoryMVVM.ViewModels
 {
     public class HomeViewModel : ViewModelBase
     {
-
         #region Fields
         private string _searchInput;
         private string _filterInput;
@@ -28,9 +27,9 @@ namespace EmployeeDirectoryMVVM.ViewModels
         #region Commands
         public ICommand DeleteCommand { get; set; }
         public ICommand EditCommand { get; set; }
+        public ICommand AddEmployeeCommand { get; set; }
         #endregion
         #region Properties
-
         public string SearchInput
         {
             get { return _searchInput; }
@@ -42,9 +41,9 @@ namespace EmployeeDirectoryMVVM.ViewModels
             set { _filterInput = value; FilterEmployeesBySearch(SearchInput); OnPropertyChange(nameof(FilterInput)); }
         }
         public string[] FilterCategories { get; set; }
-        public Employee SelectedEmployee 
+        public Employee SelectedEmployee
         {
-            get { return _selectedEmployee; } 
+            get { return _selectedEmployee; }
             set { _selectedEmployee = value; OnPropertyChange(nameof(SelectedEmployee)); }
         }
         public GeneralFilter SelectedJobTitle
@@ -52,7 +51,7 @@ namespace EmployeeDirectoryMVVM.ViewModels
             get { return _selectedJobTitle; }
             set { _selectedJobTitle = value; FilterEmployeesByJobTitle(value); OnPropertyChange(nameof(SelectedJobTitle)); }
         }
-        public GeneralFilter SelectedDept 
+        public GeneralFilter SelectedDept
         {
             get { return _selectedDept; }
             set { _selectedDept = value; FilterEmployeesByDepartment(value); OnPropertyChange(nameof(SelectedDept)); }
@@ -70,31 +69,40 @@ namespace EmployeeDirectoryMVVM.ViewModels
         public ObservableCollection<GeneralFilter> Departments
         {
             get { return _departments; }
-            set { _departments = value;  OnPropertyChange(nameof(Departments)); }
+            set { _departments = value; OnPropertyChange(nameof(Departments)); }
         }
         public ObservableCollection<GeneralFilter> JobTitles
         {
             get { return _jobtitles; }
             set { _jobtitles = value; OnPropertyChange(nameof(JobTitles)); }
         }
-
+        public MainWindowViewModel mainViewModel { get; set; }
         #endregion
-
-        public HomeViewModel() : base("HomeViewModel")
+        public HomeViewModel()
         {
             Employees = new ObservableCollection<Employee>(EmployeeData.Employees);
             FilteredEmployees = Employees;
             Departments = new ObservableCollection<GeneralFilter>(EmployeeData.Departments);
             JobTitles = new ObservableCollection<GeneralFilter>(EmployeeData.JobTitles);
             DeleteCommand = new CommandBase(OnDelete);
+            EditCommand = new CommandBase(NavigateToEditView);
+            AddEmployeeCommand = new CommandBase(NavigateToAddEmpView);
             FilterCategories = Enum.GetNames(typeof(FilterCategories));
+        }
+
+        private void NavigateToAddEmpView()
+        {
+            MainWindowViewModel.CurrentView = new EmployeeDetailsView("New Employee Details", null) ;
+        }
+        private void NavigateToEditView()
+        {
+            MainWindowViewModel.CurrentView = new EmployeeDetailsView("Edit Employee Details", SelectedEmployee);
         }
         public void OnDelete()
         {
-            MessageBox.Show("yayyyy! clicked delete");
             Employees.Remove(SelectedEmployee);
         }
-        
+
         private void FilterEmployeesByJobTitle(GeneralFilter value)
         {
             FilteredEmployees = new ObservableCollection<Employee>(Employees.Where(emp => emp.JobTitle.Equals(value.Name, StringComparison.OrdinalIgnoreCase)).ToList());
@@ -107,15 +115,15 @@ namespace EmployeeDirectoryMVVM.ViewModels
         private void FilterEmployeesBySearch(string value)
         {
             if (!string.IsNullOrWhiteSpace(value))
-                FilteredEmployees = new ObservableCollection<Employee>(Employees.Where(emp => 
+                FilteredEmployees = new ObservableCollection<Employee>(Employees.Where(emp =>
                                              (FilterInput.Equals("Name") && emp.PreferredName.Contains(value, StringComparison.OrdinalIgnoreCase))
                                              || (FilterInput.Equals("ContactNumber") && emp.ContactNumber.ToString().Contains(value, StringComparison.OrdinalIgnoreCase))
                                              || (FilterInput.Equals("Salary") && emp.Salary.ToString().Contains(value, StringComparison.OrdinalIgnoreCase))
                                              || (FilterInput.Equals("Experience") && emp.ExperienceInYears.ToString().Contains(value, StringComparison.OrdinalIgnoreCase))).ToList());
-            else 
+            else
                 FilteredEmployees = Employees;
         }
-        
+
 
 
 

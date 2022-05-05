@@ -44,14 +44,15 @@
         <Setter Property="CellStyle" Value="{StaticResource Ed.DataGrid.CellStyle}"/>
     </Style>
     <Style x:Key="Ed.TextBoxStyle" TargetType="TextBox">
-        <Setter Property="Margin" Value="0 0 10 0"></Setter>
+        <Setter Property="Margin" Value="0 18 10 10"/>
         <Setter Property="Padding" Value="5"/>
-        <Setter Property="Height" Value="30"></Setter>
-        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
     </Style>
     <Style x:Key="Ed.PrimaryHeading" TargetType="TextBlock">
         <Setter Property="Foreground" Value="{StaticResource ED.Colors.PrimaryColour}"/>
         <Setter Property="FontSize" Value="{StaticResource Ed.FontSize.PrimaryFontSize}"/>
+        <Setter Property="Margin" Value="0 20 0 20"/>
     </Style>
     <Style TargetType="ComboBox">
         <Setter Property="FontWeight" Value="Normal"/>
@@ -60,7 +61,6 @@
     <Style x:Key="Ed.Labels.FormLabelText" TargetType="TextBlock">
         <Setter Property="Padding" Value="0 0 0 4"/>
         <Setter Property="FontWeight" Value="DemiBold"/>
-        <Setter Property="VerticalAlignment" Value="Top"/>
     </Style>
     <Style x:Key="Ed.DataGrid.GenderCellStyle" TargetType="DataGridCell" BasedOn="{StaticResource Ed.DataGrid.CellStyle}">
         <Style.Triggers>
@@ -90,6 +90,11 @@
     <Style x:Key="Ed.Buttons.DeleteStyle" TargetType="Button" BasedOn="{StaticResource Ed.Buttons.EditDeleteBtnStyle}">
         <Setter Property="Background" Value="OrangeRed"></Setter>
         <Setter Property="Foreground" Value="White"></Setter>
+    </Style>
+    <Style x:Key="Ed.Buttons.Cancel" TargetType="Button" BasedOn="{StaticResource Ed.Buttons.DeleteStyle}">
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="Width" Value="125"/>
+
     </Style>
     <DataTemplate x:Key="GeneralFilterTemplate">
         <StackPanel Orientation="Horizontal">

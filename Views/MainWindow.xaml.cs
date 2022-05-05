@@ -11,8 +11,7 @@ namespace EmployeeDirectoryMVVM
         public MainWindow()
         {
             InitializeComponent();
-            JsonHelper.InitGeneralFiltersData();
-            JsonHelper.InitEmployeeData();
+            
         }
 
     }

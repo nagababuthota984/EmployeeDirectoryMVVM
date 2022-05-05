@@ -1,32 +1,25 @@
-﻿using System.ComponentModel;
+﻿using EmployeeDirectoryMVVM.Data;
+using EmployeeDirectoryMVVM.Views;
+using System.ComponentModel;
+using System.Windows;
 using System.Windows.Input;
 
 namespace EmployeeDirectoryMVVM.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        private ViewModelBase _currentViewModel;
-
-        public ICommand NavigateToEditEmpView { get; set; }
-        
-        public ViewModelBase CurrentViewModel
+        public static event PropertyChangedEventHandler StaticPropertyChanged;
+        private static object _currentView;
+        public static object CurrentView
         {
-            get { return _currentViewModel; }
-            set { _currentViewModel = value; OnPropertyChange(nameof(CurrentViewModel)); }
+            get { return _currentView; }
+            set { _currentView = value; StaticPropertyChanged?.Invoke(null,new PropertyChangedEventArgs(nameof(CurrentView))); }
         }
-
-        
-
         public MainWindowViewModel()
         {
-            //CurrentViewModel = new EmployeeDetailsViewModel();
-            NavigateToEditEmpView = new CommandBase(NavigateToEditEmp);
+            JsonHelper.InitGeneralFiltersData();
+            JsonHelper.InitEmployeeData();
+            CurrentView = new HomeView();
         }
-
-        private void NavigateToEditEmp()
-        {
-            CurrentViewModel = new EmployeeDetailsViewModel();
-        }
-        
     }
 }
