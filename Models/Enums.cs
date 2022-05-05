@@ -13,8 +13,6 @@
             ContactNumber,
             Salary,
             Experience,
-            SkypeId,
-            Age
         }
         public enum GeneralFilterCategories
         {

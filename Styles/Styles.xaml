@@ -18,7 +18,6 @@
         <Setter Property="TextBlock.VerticalAlignment" Value="Bottom"/>
         <Setter Property="TextBlock.FontSize" Value="{StaticResource Ed.FontSize.SmallHeadingFontSize}"/>
         <Setter Property="TextBlock.FontWeight" Value="{StaticResource Ed.FontWeight.DemiBold}"/>
-        <Setter Property="TextBlock.Height" Value="30"/>
     </Style>
     <Style x:Key="Ed.DataGrid.CellStyle" TargetType="DataGridCell">
         <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>

@@ -8,16 +8,19 @@
              mc:Ignorable="d" 
              MinHeight="450" MinWidth="800"
              >
+    <UserControl.DataContext>
+        <viewmodels:HomeViewModel/>
+    </UserControl.DataContext>
+    
+    
     <UserControl.Resources>
     <converters:JobTitleToColorConverter x:Key="Ed.Converters.JobToColorConv"/>
-        <viewmodels:HomeViewModel x:Key="HomeViewModel"/>
-        
     </UserControl.Resources>
     
 
     <Grid>
-        <!--avoid dock panel in most of the cases-->
-        <DockPanel x:Name="Main" DataContext="{StaticResource HomeViewModel}" >
+        <!--avid dock panel in most of the cases-->
+        <DockPanel x:Name="Main" >
             <Grid Margin="0 20 0 0"  DockPanel.Dock="Top" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -30,7 +33,7 @@
                 </Grid.RowDefinitions>
                 <Image HorizontalAlignment="Left" Source="/Images/saketa-logo.jpg" Width="170" />
                 <WrapPanel  Margin="20 0 0 0" Orientation="Vertical" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left">
-                    <TextBlock FontSize="{StaticResource Ed.FontSize.PrimaryFontSize}" Foreground="{StaticResource ED.Colors.PrimaryColour}"  Text="Employee Directory"/>
+                    <TextBlock MouseEnter="OnHover" Foreground="{DynamicResource HeadingColor}" FontSize="{StaticResource Ed.FontSize.PrimaryFontSize}"   Text="Employee Directory"/>
                     <TextBlock FontSize="{StaticResource Ed.FontSize.SecondaryFontSize}" Text="The Ultimate People Directory Experience"/>
                 </WrapPanel>
                 <WrapPanel  Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right">
@@ -47,9 +50,9 @@
 
             <WrapPanel  Margin="20 30 0 0"  DockPanel.Dock="Left" Orientation="Vertical">
                 <TextBlock Margin="0 0 0 3" FontWeight="{StaticResource Ed.FontWeight.DemiBold}" FontSize="{StaticResource Ed.FontSize.SecondaryFontSize}" Text="Departments"/>
-                <ListBox Name="DepartmentsDiv" SelectedItem="{Binding SelectedDept}" ItemsSource="{Binding Departments}" ItemTemplate="{StaticResource GeneralFilterTemplate}" SelectionMode="Single" SelectionChanged="FiltersClickHandler" BorderBrush="Black" BorderThickness="0 0 0 1"/>
+                <ListBox Name="DepartmentsDiv" SelectedItem="{Binding SelectedDept}" ItemsSource="{Binding Departments}" ItemTemplate="{StaticResource GeneralFilterTemplate}" SelectionMode="Single" BorderBrush="Black" BorderThickness="0 0 0 1"/>
                 <TextBlock Margin="0 5 0 3" FontWeight="{StaticResource Ed.FontWeight.DemiBold}" FontSize="{StaticResource Ed.FontSize.SecondaryFontSize}" Text="Job Titles"/>
-                <ListBox Name="JobTitlesDiv" SelectedItem="{Binding SelectedJobTitle}" ItemsSource="{Binding JobTitles}" ItemTemplate="{StaticResource GeneralFilterTemplate}"  SelectionMode="Single" BorderThickness="0" SelectionChanged="FiltersClickHandler"/>
+                <ListBox Name="JobTitlesDiv" SelectedItem="{Binding SelectedJobTitle}" ItemsSource="{Binding JobTitles}" ItemTemplate="{StaticResource GeneralFilterTemplate}"  SelectionMode="Single" BorderThickness="0"/>
                 <Button HorizontalAlignment="Left" Foreground="{StaticResource ED.Colors.PrimaryColour}" Background="white" BorderBrush="White" Content="view more"/>
             </WrapPanel>
             <Grid Margin="20 5 0 0">
@@ -62,14 +65,18 @@
                     <ColumnDefinition Width="230"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Button  Grid.Column="2" Content="Add Employee" Style="{StaticResource Ed.Buttons.AddEmp}" Click="OpenAddEmployeeForm"  HorizontalAlignment="Right"/>
-                <DataGrid Grid.Row="1" Grid.ColumnSpan="3" 
+                <Button  Grid.Column="2"
+                         Content="Add Employee" 
+                         Style="{StaticResource Ed.Buttons.AddEmp}" 
+                         HorizontalAlignment="Right"/>
+                <DataGrid AreRowDetailsFrozen="True" FrozenColumnCount="1"  Grid.Row="1" Grid.ColumnSpan="3" 
                           SelectedItem="{Binding SelectedEmployee}" 
                           ItemsSource="{Binding FilteredEmployees, Mode=TwoWay}" Margin="0 0 10 20" 
                           Style="{StaticResource Ed.DataGridStyle}"  
-                          Name="EmployeeCards" >
+                          Name="EmployeeCards"
+                          >
                     <DataGrid.Columns  >
-                        <DataGridTemplateColumn Header="Name">
+                        <DataGridTemplateColumn Width="150" Header="Name">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock>
@@ -78,22 +85,8 @@
                                     </TextBlock>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
-
-                            <!--<DataGridTextColumn.Binding>
-                                    <MultiBinding StringFormat="{}{0} {1}">
-                                        <Binding Path="FirstName"/>
-                                        <Binding Path="LastName"/>
-                                    </MultiBinding>
-                                </DataGridTextColumn.Binding>-->
                         </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Header="Email" >
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBox Text="{Binding Email,UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-
+                        <DataGridTextColumn Header="Email" Binding="{Binding Email}"/>
                         <DataGridTextColumn Header="Age" Binding="{Binding Dob, Converter={converters:DobToAgeConverter}, StringFormat={}{0} years old}"/>
                         <DataGridTextColumn CellStyle="{StaticResource Ed.DataGrid.GenderCellStyle}" Header="Gender" Binding="{Binding Gender}"/>
                         <DataGridTextColumn Header="JobTitle" Binding="{Binding Path=JobTitle}">
@@ -118,15 +111,18 @@
                         <DataGridTemplateColumn Header="Edit">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button  Style="{StaticResource Ed.Buttons.EditStyle}" Content="Edit Details" Command="{Binding EditCommand}"/>
+                                    <Button 
+                                        DataContext="{StaticResource MainVm}"
+                                        Command="{Binding NavigateToEditEmpView}"
+                                        Style="{StaticResource Ed.Buttons.EditStyle}" 
+                                        Content="Edit Details"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTemplateColumn Header="Delete">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate >
-                                    <Button DataContext="{StaticResource HomeViewModel}" Style="{StaticResource Ed.Buttons.DeleteStyle}" Content="Delete" 
-                                            Command="{Binding DeleteCommand}"/>
+                                    <Button Style="{StaticResource Ed.Buttons.DeleteStyle}" Content="Delete"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -138,12 +134,9 @@
                 </WrapPanel>
                 <WrapPanel Orientation="Horizontal" Style="{StaticResource Ed.AdvancedFilterStyle}" VerticalAlignment="Center" Grid.Column="1" HorizontalAlignment="Center">
                     <TextBlock Margin="0 5 5 0" Text="Filter By:"/>
-                    <ComboBox Name="Filter" Padding="6" Height="30" Width="150" SelectionChanged="FilterSelectionChanged" />
+                    <ComboBox Name="Filter" ItemsSource="{Binding FilterCategories}"  SelectedItem="{Binding FilterInput}" Padding="6" Height="30" Width="150"/>
                 </WrapPanel>
             </Grid>
         </DockPanel>
-        <ContentControl Visibility="Collapsed" Name="UserControlSpace" Width="Auto"/>
-
-
     </Grid>
 </UserControl>

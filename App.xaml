@@ -1,12 +1,13 @@
 ﻿<Application x:Class="EmployeeDirectoryMVVM.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             StartupUri="Views/MainWindow.xaml">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:viewmodels="clr-namespace:EmployeeDirectoryMVVM.ViewModels">
     <Application.Resources>
-        <ResourceDictionary>
+    <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styles/Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <viewmodels:MainWindowViewModel x:Key="MainVm"/>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

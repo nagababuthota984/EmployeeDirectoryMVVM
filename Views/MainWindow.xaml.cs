@@ -1,5 +1,4 @@
 ﻿using EmployeeDirectoryMVVM.Data;
-using EmployeeDirectoryMVVM.Views;
 using System.Windows;
 
 namespace EmployeeDirectoryMVVM
@@ -14,8 +13,6 @@ namespace EmployeeDirectoryMVVM
             InitializeComponent();
             JsonHelper.InitGeneralFiltersData();
             JsonHelper.InitEmployeeData();
-            MainContent.Content = new HomeView();
-
         }
 
     }

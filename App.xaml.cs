@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using EmployeeDirectoryMVVM.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Windows;
 
 namespace EmployeeDirectoryMVVM
@@ -13,5 +10,14 @@ namespace EmployeeDirectoryMVVM
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+        }
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            MainWindow window = new();
+            window.Show();
+            base.OnStartup(e);
+        }
     }
 }
