@@ -11,7 +11,6 @@ namespace EmployeeDirectoryMVVM
         public MainWindow()
         {
             InitializeComponent();
-            
         }
 
     }

@@ -100,7 +100,7 @@
                         <DataGridTextColumn  Header="Salary" Binding="{Binding Salary}">
                             <DataGridTextColumn.ElementStyle>
                                 <Style TargetType="TextBlock" >
-                                    <Setter Property="Foreground" Value="{Binding Salary, Converter={converters:SalaryRangeConverter}}"/>
+                                    <Setter Property="Foreground" Value="{Binding Salary, Converter={converters:SalaryRangeToColorConverter}}"/>
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
@@ -117,7 +117,9 @@
                         <DataGridTemplateColumn Header="Delete">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate >
-                                    <Button Style="{StaticResource Ed.Buttons.DeleteStyle}" Content="Delete"/>
+                                    <Button 
+                                        Command="{Binding  RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl} , Path=DataContext.DeleteCommand}"
+                                        Style="{StaticResource Ed.Buttons.DeleteStyle}" Content="Delete"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>

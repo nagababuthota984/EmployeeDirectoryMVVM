@@ -9,8 +9,8 @@ namespace EmployeeDirectoryMVVM.Converters
 {
     public class JobTitleToColorConverter : IValueConverter
     {
-        public static Random random = new Random();
-        public static Dictionary<string, SolidColorBrush> colors = new Dictionary<string, SolidColorBrush>();
+        public static Random random = new();
+        public static Dictionary<string, SolidColorBrush> colors = new();
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             KeyValuePair<string, SolidColorBrush> job = colors.FirstOrDefault(clrs => clrs.Key.Equals(value.ToString(), StringComparison.CurrentCultureIgnoreCase));

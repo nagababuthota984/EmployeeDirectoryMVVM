@@ -4,7 +4,6 @@ using EmployeeDirectoryMVVM.Views;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows;
 using System.Windows.Input;
 using static EmployeeDirectoryMVVM.Models.Enums;
 
@@ -92,11 +91,17 @@ namespace EmployeeDirectoryMVVM.ViewModels
 
         private void NavigateToAddEmpView()
         {
-            MainWindowViewModel.CurrentView = new EmployeeDetailsView("New Employee Details", null) ;
+            MainWindowViewModel.CurrentView = new AddAndEditEmpView()
+            {
+                DataContext = new AddAndEditEmpViewModel("New Employee Details","Add Employee",null)
+            };
         }
         private void NavigateToEditView()
         {
-            MainWindowViewModel.CurrentView = new EmployeeDetailsView("Edit Employee Details", SelectedEmployee);
+            MainWindowViewModel.CurrentView = new AddAndEditEmpView()
+            {
+                DataContext = new AddAndEditEmpViewModel("Edit Employee Details","Save Changes",SelectedEmployee)
+            };
         }
         public void OnDelete()
         {

@@ -27,7 +27,7 @@ namespace EmployeeDirectoryMVVM.Utilities
         }
         public static bool IsValidEmailFormat(string email)
         {
-            Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+            Regex regex = new(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
             Match match = regex.Match(email);
             return match.Success;
         }

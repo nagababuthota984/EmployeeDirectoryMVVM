@@ -10,9 +10,6 @@ namespace EmployeeDirectoryMVVM
     /// </summary>
     public partial class App : Application
     {
-        public App()
-        {
-        }
         protected override void OnStartup(StartupEventArgs e)
         {
             MainWindow window = new();

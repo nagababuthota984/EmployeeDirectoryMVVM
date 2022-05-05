@@ -1,8 +1,6 @@
 ﻿using EmployeeDirectoryMVVM.Data;
 using EmployeeDirectoryMVVM.Views;
 using System.ComponentModel;
-using System.Windows;
-using System.Windows.Input;
 
 namespace EmployeeDirectoryMVVM.ViewModels
 {

@@ -5,7 +5,6 @@ namespace EmployeeDirectoryMVVM.ViewModels
 {
     public class CommandBase : ICommand
     {
-        public event EventHandler? CanExecuteChanged;
         //Action - A delegate which stores a method(which may take 0 or more params & not return any value) 
         Action _executeMethod;
         //Func<out return type> - a delegate which stores a method(which may take 0 or more params & return a value) 
@@ -19,6 +18,9 @@ namespace EmployeeDirectoryMVVM.ViewModels
             _executeMethod = executeMethod;
             _canExecuteMethod = canExecuteMethod;
         }
+
+        public event EventHandler? CanExecuteChanged;
+
         public bool CanExecute(object? parameter)
         {
             if (_canExecuteMethod != null) return _canExecuteMethod();
@@ -29,10 +31,6 @@ namespace EmployeeDirectoryMVVM.ViewModels
         {
             if (_executeMethod != null)
                 _executeMethod();
-        }
-        public void RaiseCanExecuteChanged()
-        {
-            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }

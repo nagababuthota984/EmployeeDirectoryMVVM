@@ -6,7 +6,7 @@ using System.Windows.Media;
 
 namespace EmployeeDirectoryMVVM.Converters
 {
-    public class SalaryRangeConverter : MarkupExtension, IValueConverter
+    public class SalaryRangeToColorConverter : MarkupExtension, IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
