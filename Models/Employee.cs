@@ -1,11 +1,15 @@
-﻿using System;
+﻿using EmployeeDirectoryMVVM.Data;
+using System;
+using System.Linq;
 using static EmployeeDirectoryMVVM.Models.Enums;
 
 namespace EmployeeDirectoryMVVM.Models
 {
     public class Employee
     {
+        private static readonly Random _random = new();
         #region Properties
+        public string Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PreferredName { get; set; }
@@ -24,19 +28,34 @@ namespace EmployeeDirectoryMVVM.Models
 
         public Employee(string firstName, string lastName, string email, DateTime dob, string jobtitle, string department, int experienceInYears, long phoneNumber, decimal salary, EmployementType empType)
         {
-            this.FirstName = firstName;
-            this.LastName = lastName;
-            this.PreferredName = $"{firstName} {lastName}";
-            this.Email = email;
-            this.Dob = dob;
-            this.JobTitle = jobtitle;
-            this.Department = department;
-            this.ExperienceInYears = experienceInYears;
-            this.Salary = salary;
-            this.ContactNumber = phoneNumber;
-            this.EmploymentType = empType;
-            this.Status = Status.Existing;
+            Id = GenerateId();
+            FirstName = firstName;
+            LastName = lastName;
+            PreferredName = $"{firstName} {lastName}";
+            Email = email;
+            Dob = dob;
+            JobTitle = jobtitle;
+            Department = department;
+            ExperienceInYears = experienceInYears;
+            Salary = salary;
+            ContactNumber = phoneNumber;
+            EmploymentType = empType;
+            Status = Status.Existing;
         }
+        public Employee(Employee employee) : 
+            this(employee.FirstName,employee.LastName,employee.Email,employee.Dob,employee.JobTitle,employee.Department,employee.ExperienceInYears,employee.ContactNumber,employee.Salary,employee.EmploymentType)
+        {
+        }
+        private static string GenerateId()
+        {
+            string id;
+            do
+            {
+                id = _random.Next(0, 99999).ToString("D4");
+            }while(EmployeeData.Employees.Any(emp=> emp.Id.Equals(id)));
+            return id;
+        }
+
         public Employee()
         {
 

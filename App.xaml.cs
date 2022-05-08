@@ -1,6 +1,4 @@
-﻿using EmployeeDirectoryMVVM.ViewModels;
-using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using EmployeeDirectoryMVVM.Data;
 using System.Windows;
 
 namespace EmployeeDirectoryMVVM
@@ -10,6 +8,11 @@ namespace EmployeeDirectoryMVVM
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            JsonHelper.InitGeneralFiltersData();
+            JsonHelper.InitEmployeeData();
+        }
         protected override void OnStartup(StartupEventArgs e)
         {
             MainWindow window = new();

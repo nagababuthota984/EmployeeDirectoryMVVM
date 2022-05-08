@@ -4,6 +4,7 @@ using EmployeeDirectoryMVVM.Views;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 using static EmployeeDirectoryMVVM.Models.Enums;
 
@@ -75,7 +76,6 @@ namespace EmployeeDirectoryMVVM.ViewModels
             get { return _jobtitles; }
             set { _jobtitles = value; OnPropertyChange(nameof(JobTitles)); }
         }
-        public MainWindowViewModel mainViewModel { get; set; }
         #endregion
         public HomeViewModel()
         {
@@ -93,7 +93,7 @@ namespace EmployeeDirectoryMVVM.ViewModels
         {
             MainWindowViewModel.CurrentView = new AddAndEditEmpView()
             {
-                DataContext = new AddAndEditEmpViewModel("New Employee Details","Add Employee",null)
+                DataContext = new AddAndEditEmpViewModel("New Employee Details","Add Employee",new Employee())
             };
         }
         private void NavigateToEditView()
@@ -105,7 +105,8 @@ namespace EmployeeDirectoryMVVM.ViewModels
         }
         public void OnDelete()
         {
-            Employees.Remove(SelectedEmployee);
+            if(MessageBoxResult.Yes == MessageBox.Show($"Are you sure you want to delete {SelectedEmployee.PreferredName}?","Delete Employee",MessageBoxButton.YesNo))
+                Employees.Remove(SelectedEmployee);
         }
 
         private void FilterEmployeesByJobTitle(GeneralFilter value)

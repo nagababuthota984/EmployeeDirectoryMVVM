@@ -15,8 +15,7 @@ namespace EmployeeDirectoryMVVM.ViewModels
         }
         public MainWindowViewModel()
         {
-            JsonHelper.InitGeneralFiltersData();
-            JsonHelper.InitEmployeeData();
+            
             CurrentView = new HomeView();
         }
     }

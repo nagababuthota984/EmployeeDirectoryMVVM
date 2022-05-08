@@ -1,5 +1,9 @@
-﻿using EmployeeDirectoryMVVM.Models;
+﻿using EmployeeDirectoryMVVM.Data;
+using EmployeeDirectoryMVVM.Models;
 using EmployeeDirectoryMVVM.Views;
+using System;
+using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 
 namespace EmployeeDirectoryMVVM.ViewModels
@@ -13,6 +17,7 @@ namespace EmployeeDirectoryMVVM.ViewModels
         #endregion
         #region Commands
         public ICommand CancelCommand { get; set; }
+        public ICommand OkCommand { get; set; }
         #endregion
         #region Properties
         public Employee SelectedEmployee
@@ -38,7 +43,36 @@ namespace EmployeeDirectoryMVVM.ViewModels
             HeadingText = headingText;
             OkBtnContent = okBtnContent;
             CancelCommand = new CommandBase(OnCancel);
+            SetOkBtnCommand(OkBtnContent);
         }
+
+        private void SetOkBtnCommand(string okBtnContent)
+        {
+            if (!string.IsNullOrWhiteSpace(okBtnContent))
+            {
+                if (OkBtnContent.Equals("Add Employee", StringComparison.OrdinalIgnoreCase))
+                    OkCommand = new CommandBase(OnAddEmp);
+                else
+                    OkCommand = new CommandBase(OnSaveChanges);
+            }
+        }
+        private void OnSaveChanges()
+        {
+            EmployeeData.Employees.Remove(EmployeeData.Employees.FirstOrDefault(emp => emp.Id.Equals(SelectedEmployee.Id, StringComparison.OrdinalIgnoreCase)));
+            EmployeeData.Employees.Add(SelectedEmployee);
+            JsonHelper.WriteToJson<Employee>();
+            MessageBox.Show($"Details of {SelectedEmployee.PreferredName} have been updated succesfully.", "Employee Updated");
+            OnCancel();
+        }
+        private void OnAddEmp()
+        {
+            //SelectedEmployee = new Employee(SelectedEmployee);
+            EmployeeData.Employees.Add(new(SelectedEmployee));
+            JsonHelper.WriteToJson<Employee>();
+            MessageBox.Show($"{SelectedEmployee.PreferredName} has been added succesfully.", "Employee Added");
+            OnCancel();
+        }
+
         private void OnCancel()
         {
             MainWindowViewModel.CurrentView = new HomeView();
