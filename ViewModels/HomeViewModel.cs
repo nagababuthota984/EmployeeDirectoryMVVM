@@ -84,23 +84,23 @@ namespace EmployeeDirectoryMVVM.ViewModels
             Departments = new ObservableCollection<GeneralFilter>(EmployeeData.Departments);
             JobTitles = new ObservableCollection<GeneralFilter>(EmployeeData.JobTitles);
             DeleteCommand = new CommandBase(OnDelete);
-            EditCommand = new CommandBase(NavigateToEditView);
-            AddEmployeeCommand = new CommandBase(NavigateToAddEmpView);
+            EditCommand = new CommandBase(OnEditEmp);
+            AddEmployeeCommand = new CommandBase(OnAddEmp);
             FilterCategories = Enum.GetNames(typeof(FilterCategories));
         }
 
-        private void NavigateToAddEmpView()
+        private void OnAddEmp()
         {
             MainWindowViewModel.CurrentView = new AddAndEditEmpView()
             {
-                DataContext = new AddAndEditEmpViewModel("New Employee Details","Add Employee",new Employee())
+                DataContext = new AddEditEmpViewModel("New Employee Details","Add Employee",new Employee())
             };
         }
-        private void NavigateToEditView()
+        private void OnEditEmp()
         {
             MainWindowViewModel.CurrentView = new AddAndEditEmpView()
             {
-                DataContext = new AddAndEditEmpViewModel("Edit Employee Details","Save Changes",SelectedEmployee)
+                DataContext = new AddEditEmpViewModel("Edit Employee Details","Update",SelectedEmployee)
             };
         }
         public void OnDelete()

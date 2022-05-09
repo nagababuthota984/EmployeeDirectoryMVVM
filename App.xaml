@@ -6,6 +6,9 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styles/Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            
+            <Image x:Key="Ed.Icons.EditIcon" Source="/Images/EditIcon.png"/>
+            <Image x:Key="Ed.Icons.DeleteIcon" Source="/Images/DeleteIcon.png"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

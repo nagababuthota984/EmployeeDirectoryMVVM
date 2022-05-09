@@ -3,22 +3,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:converters="clr-namespace:EmployeeDirectoryMVVM.Converters"
         xmlns:viewmodels="clr-namespace:EmployeeDirectoryMVVM.ViewModels"
-        xmlns:views="clr-namespace:EmployeeDirectoryMVVM.Views"
         mc:Ignorable="d"
-        Title="MainWindow" MinHeight="600" MinWidth="800">
+        Title="Employee Directory" MinHeight="600" MinWidth="800">
     <Window.DataContext>
         <viewmodels:MainWindowViewModel/>
     </Window.DataContext>
     <Grid>
         <ContentPresenter Content="{Binding CurrentView}" Width="Auto"/>
     </Grid>
-
-
-
-
-
     <!--<Grid Background="Aqua">
         --><!--<Button Height="30" Width="100" Content="Click here" Command="{Binding NavigateToEditEmpView}" />-->
         <!--<ContentControl Name="MainContent"  Background="Green" Height="300" Width="400">

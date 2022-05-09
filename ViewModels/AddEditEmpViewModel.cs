@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace EmployeeDirectoryMVVM.ViewModels
 {
-    public class AddAndEditEmpViewModel : ViewModelBase
+    public class AddEditEmpViewModel : ViewModelBase
     {
         #region Fields
         private Employee _employee;
@@ -37,7 +37,7 @@ namespace EmployeeDirectoryMVVM.ViewModels
         }
         #endregion
 
-        public AddAndEditEmpViewModel(string headingText,string okBtnContent,Employee selectedEmployee)
+        public AddEditEmpViewModel(string headingText,string okBtnContent,Employee selectedEmployee)
         {
             _employee = selectedEmployee;
             HeadingText = headingText;
@@ -51,25 +51,37 @@ namespace EmployeeDirectoryMVVM.ViewModels
             if (!string.IsNullOrWhiteSpace(okBtnContent))
             {
                 if (OkBtnContent.Equals("Add Employee", StringComparison.OrdinalIgnoreCase))
-                    OkCommand = new CommandBase(OnAddEmp);
+                    OkCommand = new CommandBase(OnAddEmp,CanAddEmp);
                 else
-                    OkCommand = new CommandBase(OnSaveChanges);
+                    OkCommand = new CommandBase(OnUpdate,CanUpdate);
             }
         }
-        private void OnSaveChanges()
+
+        private bool CanUpdate()
+        {
+            //validation goes here.
+            return true;
+        }
+
+        private bool CanAddEmp()
+        {
+            //validation goes here
+            return true;
+        }
+
+        private void OnUpdate()
         {
             EmployeeData.Employees.Remove(EmployeeData.Employees.FirstOrDefault(emp => emp.Id.Equals(SelectedEmployee.Id, StringComparison.OrdinalIgnoreCase)));
             EmployeeData.Employees.Add(SelectedEmployee);
             JsonHelper.WriteToJson<Employee>();
-            MessageBox.Show($"Details of {SelectedEmployee.PreferredName} have been updated succesfully.", "Employee Updated");
+            MessageBox.Show($"Details have been updated succesfully.", "Employee Updated");
             OnCancel();
         }
         private void OnAddEmp()
         {
-            //SelectedEmployee = new Employee(SelectedEmployee);
             EmployeeData.Employees.Add(new(SelectedEmployee));
             JsonHelper.WriteToJson<Employee>();
-            MessageBox.Show($"{SelectedEmployee.PreferredName} has been added succesfully.", "Employee Added");
+            MessageBox.Show($"Employee has been added succesfully.", "Employee Added");
             OnCancel();
         }
 

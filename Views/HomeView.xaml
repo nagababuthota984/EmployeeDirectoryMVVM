@@ -6,12 +6,13 @@
              xmlns:converters="clr-namespace:EmployeeDirectoryMVVM.Converters" 
              xmlns:viewmodels="clr-namespace:EmployeeDirectoryMVVM.ViewModels"
              mc:Ignorable="d" 
-             MinHeight="450" MinWidth="500">
+             xmlns:fa5="http://schemas.fontawesome.com/icons/"
+             MinHeight="450" MinWidth="800">
     <UserControl.DataContext>
         <viewmodels:HomeViewModel/>
     </UserControl.DataContext>
     <UserControl.Resources>
-    <converters:JobTitleToColorConverter x:Key="Ed.Converters.JobToColorConv"/>
+        <converters:JobTitleToColorConverter x:Key="Ed.Converters.JobToColorConv"/>
     </UserControl.Resources>
     <Grid>
         <!--avid dock panel in most of the cases-->
@@ -28,7 +29,11 @@
                 </Grid.RowDefinitions>
                 <Image HorizontalAlignment="Left" Source="/Images/saketa-logo.jpg" Width="170" />
                 <WrapPanel  Margin="20 0 0 0" Orientation="Vertical" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left">
-                    <TextBlock Style="{StaticResource Ed.PrimaryHeading}"  Margin="0" Text="Employee Directory"/>
+                    <TextBlock Style="{StaticResource Ed.PrimaryHeading}"  Margin="0" Text="Employee Directory" >
+                        <TextBlock.InputBindings>
+                            <MouseBinding Command="{Binding AddEmployeeCommand}" MouseAction="LeftClick"/>
+                        </TextBlock.InputBindings>
+                    </TextBlock>
                     <TextBlock FontSize="{StaticResource Ed.FontSize.SecondaryFontSize}" Text="The Ultimate People Directory Experience"/>
                 </WrapPanel>
                 <WrapPanel  Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right">
@@ -48,7 +53,7 @@
                 <ListBox Name="DepartmentsDiv" SelectedItem="{Binding SelectedDept}" ItemsSource="{Binding Departments}" ItemTemplate="{StaticResource GeneralFilterTemplate}" SelectionMode="Single" BorderBrush="Black" BorderThickness="0 0 0 1"/>
                 <TextBlock Margin="0 5 0 3" FontWeight="{StaticResource Ed.FontWeight.DemiBold}" FontSize="{StaticResource Ed.FontSize.SecondaryFontSize}" Text="Job Titles"/>
                 <ListBox Name="JobTitlesDiv" SelectedItem="{Binding SelectedJobTitle}" ItemsSource="{Binding JobTitles}" ItemTemplate="{StaticResource GeneralFilterTemplate}"  SelectionMode="Single" BorderThickness="0"/>
-                <Button HorizontalAlignment="Left" Foreground="{StaticResource ED.Colors.PrimaryColour}" Background="white" BorderBrush="White" Content="view more"/>
+                <Button HorizontalAlignment="Left"  Foreground="{StaticResource ED.Colors.PrimaryColour}" Background="white" BorderBrush="White" Content="view more"/>
             </WrapPanel>
             <Grid Margin="20 5 0 0">
                 <Grid.RowDefinitions>
@@ -70,6 +75,7 @@
                           ItemsSource="{Binding FilteredEmployees, Mode=TwoWay}" Margin="0 0 10 20" 
                           Style="{StaticResource Ed.DataGridStyle}"  
                           Name="EmployeeCards"
+                          AlternatingRowBackground="#EEEEF2"
                           >
                     <DataGrid.Columns  >
                         <DataGridTemplateColumn Width="150" Header="Name">
@@ -85,15 +91,25 @@
                         <DataGridTextColumn Header="Email" Binding="{Binding Email}"/>
                         <DataGridTextColumn Header="Age" Binding="{Binding Dob, Converter={converters:DobToAgeConverter}, StringFormat={}{0} years old}"/>
                         <DataGridTextColumn CellStyle="{StaticResource Ed.DataGrid.GenderCellStyle}" Header="Gender" Binding="{Binding Gender}"/>
-                        <DataGridTextColumn Header="JobTitle" Binding="{Binding Path=JobTitle}">
-                            <DataGridTextColumn.ElementStyle >
-                                <Style TargetType="TextBlock" >
-                                    <Setter Property="Background" Value="{Binding JobTitle, Converter={StaticResource Ed.Converters.JobToColorConv}}"/>
-                                    <Setter Property="Foreground" Value="White"/>
-                                    <Setter Property="Height" Value="20"/>
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
+                        <DataGridTemplateColumn Header="JobTitle">
+                            <DataGridTemplateColumn.CellTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding JobTitle}">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock" >
+                                                <Setter Property="Background" Value="{Binding JobTitle, Converter={StaticResource Ed.Converters.JobToColorConv}}"/>
+                                                <Setter Property="Foreground" Value="White"/>
+                                                <Setter Property="Height" Value="20"/>
+                                                <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                                            </Style>
+                                        </TextBlock.Style>
+                                        <TextBlock.ToolTip>
+                                            <TextBlock Text="{Binding JobTitle}"/>
+                                        </TextBlock.ToolTip>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                         <DataGridTextColumn Header="Department" Binding="{Binding Department}"/>
                         <DataGridTextColumn Header="Experience" Binding="{Binding ExperienceInYears}"/>
                         <DataGridTextColumn Header="Contact" Binding="{Binding ContactNumber}"/>
@@ -104,22 +120,27 @@
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
-                        <DataGridTemplateColumn Header="Edit">
+                        <DataGridTemplateColumn >
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button 
-                                        Command="{Binding  RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl} , Path=DataContext.EditCommand}"
-                                        Style="{StaticResource Ed.Buttons.EditStyle}" 
-                                        Content="Edit Details"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Header="Delete">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate >
-                                    <Button 
-                                        Command="{Binding  RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl} , Path=DataContext.DeleteCommand}"
-                                        Style="{StaticResource Ed.Buttons.DeleteStyle}" Content="Delete"/>
+                                    <Grid >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <Button  BorderThickness="0" BorderBrush="Transparent" Background="Transparent"
+                                        Command="{Binding  RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl} , Path=DataContext.EditCommand}">
+                                            <Button.Content>
+                                                <fa5:ImageAwesome Icon="Solid_UserEdit" Width="20" Height="20" Foreground="{StaticResource ED.Colors.PrimaryColour}"/>
+                                            </Button.Content>
+                                        </Button>
+                                        <Button Grid.Column="1" BorderThickness="0" BorderBrush="Transparent" Background="Transparent"
+                                        Command="{Binding  RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl} , Path=DataContext.DeleteCommand}">
+                                            <Button.Content>
+                                                <fa5:ImageAwesome Icon="Solid_Trash" Width="20" Height="20" Foreground="Red"/>
+                                            </Button.Content>
+                                        </Button>
+                                    </Grid>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>

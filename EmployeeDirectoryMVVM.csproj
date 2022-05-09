@@ -9,16 +9,21 @@
 
   <ItemGroup>
     <None Remove="Images\andrew-philips.png" />
+    <None Remove="Images\DeleteIcon.png" />
+    <None Remove="Images\EditIcon.png" />
     <None Remove="Images\saketa-logo.jpg" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FontAwesome5" Version="2.1.6" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Images\andrew-philips.png" />
+    <Resource Include="Images\DeleteIcon.png" />
+    <Resource Include="Images\EditIcon.png" />
     <Resource Include="Images\saketa-logo.jpg" />
   </ItemGroup>
 

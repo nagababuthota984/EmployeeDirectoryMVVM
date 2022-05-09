@@ -1,11 +1,13 @@
 ﻿using EmployeeDirectoryMVVM.Data;
 using System;
+using System.ComponentModel;
 using System.Linq;
+using System.Text.RegularExpressions;
 using static EmployeeDirectoryMVVM.Models.Enums;
 
 namespace EmployeeDirectoryMVVM.Models
 {
-    public class Employee
+    public class Employee : IDataErrorInfo
     {
         private static readonly Random _random = new();
         #region Properties
@@ -24,6 +26,72 @@ namespace EmployeeDirectoryMVVM.Models
         public decimal Salary { get; set; }
 
         public EmployementType EmploymentType { get; set; }
+
+        public string Error
+        {
+            get { return null; }
+            
+        }
+        public string this[string propertyName]
+        {
+            get
+            {
+                string error=null;
+                switch(propertyName)
+                {
+                    case "FirstName":
+                        if (string.IsNullOrWhiteSpace(FirstName))
+                            error = "Firstname shouldn't be empty";
+                        else if (FirstName.Any(char.IsDigit) || FirstName.Any(char.IsPunctuation))
+                            error = "FirstName shouldn't contain digits/special characters";
+                        break;
+                    case "LastName":
+                        if (string.IsNullOrWhiteSpace(LastName))
+                            error = "LastName shouldn't be empty";
+                        else if (LastName.Any(char.IsDigit) || LastName.Any(char.IsPunctuation))
+                            error = "LastName shouldn't contain digits/special characters";
+                        break;
+                    case "JobTitle":
+                        if (string.IsNullOrWhiteSpace(JobTitle))
+                            error = "JobTitle shouldn't be empty";
+                        else if (JobTitle.Any(char.IsDigit) || JobTitle.Any(char.IsPunctuation))
+                            error = "JobTitle shouldn't contain digits/special characters";
+                        break;
+                    case "Department":
+                        if (string.IsNullOrWhiteSpace(Department))
+                            error = "Department shouldn't be empty";
+                        else if (Department.Any(char.IsDigit) || Department.Any(char.IsPunctuation))
+                            error = "Department shouldn't contain digits/special characters";
+                        break;
+                    case "ContactNumber":
+                        if (ContactNumber<0 || ContactNumber.ToString().Length!=10)
+                            error = "Contact number should be of 10 digits";
+                        else if (ContactNumber.ToString().Any(char.IsLetter))
+                            error = "Contact number should only contain digits.";
+                        break;
+                    case "ExperienceInYears":
+                        if (ExperienceInYears < 0 || ExperienceInYears > 40)
+                            error = "Experience should be between 0-40 years";
+                        else if (ContactNumber.ToString().Any(char.IsLetter))
+                            error = "Experience should only contain digits.";
+                        break;
+                    case "Salary":
+                        if (Salary < 0)
+                            error = "Salary shouldn't be negative";
+                        else if (ContactNumber.ToString().Any(char.IsLetter))
+                            error = "Salary should only contain digits.";
+                        break;
+                    case "Email":
+                        Regex regex = new(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+                        if (!string.IsNullOrWhiteSpace(Email) && !regex.Match(Email).Success)
+                            error = "Please enter a valid email.";
+                        break;
+
+                }
+                return error;
+            }
+        }
+
         #endregion
 
         public Employee(string firstName, string lastName, string email, DateTime dob, string jobtitle, string department, int experienceInYears, long phoneNumber, decimal salary, EmployementType empType)
@@ -58,7 +126,7 @@ namespace EmployeeDirectoryMVVM.Models
 
         public Employee()
         {
-
+            Dob = DateTime.Today;
         }
     }
 }

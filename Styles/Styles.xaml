@@ -13,17 +13,20 @@
     <Thickness x:Key="Ed.Margins.NoMargin">0</Thickness>
     <FontWeight x:Key="Ed.FontWeight.DemiBold">DemiBold</FontWeight>
 
-
+    <Style TargetType="Button">
+        <Setter Property="Cursor" Value="Hand"/>
+    </Style>
     <Style x:Key ="Ed.AdvancedFilterStyle"  TargetType="WrapPanel">
         <Setter Property="TextBlock.VerticalAlignment" Value="Bottom"/>
         <Setter Property="TextBlock.FontSize" Value="{StaticResource Ed.FontSize.SmallHeadingFontSize}"/>
         <Setter Property="TextBlock.FontWeight" Value="{StaticResource Ed.FontWeight.DemiBold}"/>
     </Style>
     <Style x:Key="Ed.DataGrid.CellStyle" TargetType="DataGridCell">
-        <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
-        <Setter Property="VerticalAlignment" Value="Stretch"></Setter>
-        <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
-        <Setter Property="TextBlock.VerticalAlignment" Value="Center"></Setter>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+        <Setter Property="TextBlock.VerticalAlignment" Value="Center"/>
+        <Setter Property="BorderThickness" Value="0"/>
     </Style>
     <Style x:Key="Ed.DataGrid.ColumnsHeaderStyle" TargetType="DataGridColumnHeader">
         <Setter Property="Height" Value="30"/>
@@ -42,6 +45,7 @@
         <Setter Property="HeadersVisibility" Value="Column"/>
         <Setter Property="ColumnHeaderStyle" Value="{StaticResource Ed.DataGrid.ColumnsHeaderStyle}"/>
         <Setter Property="CellStyle" Value="{StaticResource Ed.DataGrid.CellStyle}"/>
+        <Setter Property="Background" Value="#F5F5F5"/>
     </Style>
     <Style x:Key="Ed.TextBoxStyle" TargetType="TextBox">
         <Setter Property="Margin" Value="0 18 10 10"/>
@@ -86,15 +90,17 @@
         <Setter Property="Height" Value="30"/>
         <Setter Property="Width" Value="125"/>
         <Setter Property="Margin" Value="0 0 15 0"/>
+        <Setter Property="Cursor" Value="Hand"/>
     </Style>
     <Style x:Key="Ed.Buttons.DeleteStyle" TargetType="Button" BasedOn="{StaticResource Ed.Buttons.EditDeleteBtnStyle}">
         <Setter Property="Background" Value="OrangeRed"></Setter>
         <Setter Property="Foreground" Value="White"></Setter>
+        <Setter Property="Cursor" Value="Hand"/>
     </Style>
     <Style x:Key="Ed.Buttons.Cancel" TargetType="Button" BasedOn="{StaticResource Ed.Buttons.DeleteStyle}">
         <Setter Property="Height" Value="30"/>
         <Setter Property="Width" Value="125"/>
-
+        <Setter Property="Cursor" Value="Hand"/>
     </Style>
     <DataTemplate x:Key="GeneralFilterTemplate">
         <StackPanel Orientation="Horizontal">

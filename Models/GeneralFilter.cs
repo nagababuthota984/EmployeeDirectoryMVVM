@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using static EmployeeDirectoryMVVM.Models.Enums;
+﻿using static EmployeeDirectoryMVVM.Models.Enums;
 
 namespace EmployeeDirectoryMVVM.Models
 {
