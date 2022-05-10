@@ -1,19 +1,11 @@
-﻿<UserControl x:Class="EmployeeDirectoryMVVM.Views.AddAndEditEmpView"
+﻿<UserControl x:Class="EmployeeDirectoryMVVM.Views.AddEditEmpView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" 
              MinWidth="1300" MinHeight="450">
-    <UserControl.Resources>
-        <Style TargetType="TextBox">
-            <Style.Triggers>
-                <Trigger Property="Validation.HasError" Value="True">
-                    <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)/ErrorContent}"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-    </UserControl.Resources>
+    
     <Grid DataContext="{Binding SelectedEmployee,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Left" Margin="20" Grid.IsSharedSizeScope="True" >
         <Grid.ColumnDefinitions>
             <ColumnDefinition  SharedSizeGroup="colGroup" />
@@ -30,7 +22,7 @@
         <TextBlock Name="Heading" Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}},Path=DataContext.HeadingText}" Style="{StaticResource Ed.PrimaryHeading}" HorizontalAlignment="Left" VerticalAlignment="Center" />
         <Separator Margin="0 0 0 10" Grid.ColumnSpan="3" VerticalAlignment="Bottom" Height="1" />
         <TextBlock  Style="{StaticResource Ed.Labels.FormLabelText}" Grid.Row="1" Text="First Name" Grid.ColumnSpan="2" />
-        <TextBox Text="{Binding FirstName, ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}"  Style="{StaticResource Ed.TextBoxStyle}" Name="fname" Grid.Row="1" />
+        <TextBox  Text="{Binding FirstName, ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}"  Style="{StaticResource Ed.TextBoxStyle}" Name="fname" Grid.Row="1" />
         <TextBlock Style="{StaticResource Ed.Labels.FormLabelText}" Grid.Row="2" Text="Email " Grid.ColumnSpan="2" />
         <TextBox Text="{Binding Email, ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Ed.TextBoxStyle}" Name="email" Grid.Row="2"/>
         <TextBlock Style="{StaticResource Ed.Labels.FormLabelText }" Grid.Row="3" Text="Job Title" Grid.ColumnSpan="2"/>

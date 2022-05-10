@@ -27,13 +27,9 @@
                     <RowDefinition Height="70"></RowDefinition>
                     <RowDefinition ></RowDefinition>
                 </Grid.RowDefinitions>
-                <Image HorizontalAlignment="Left" Source="/Images/saketa-logo.jpg" Width="170" />
+                <Image HorizontalAlignment="Left" Source="/EmployeeDirectoryMVVM;component/Images/saketa-logo.jpg" Width="170" />
                 <WrapPanel  Margin="20 0 0 0" Orientation="Vertical" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left">
-                    <TextBlock Style="{StaticResource Ed.PrimaryHeading}"  Margin="0" Text="Employee Directory" >
-                        <TextBlock.InputBindings>
-                            <MouseBinding Command="{Binding AddEmployeeCommand}" MouseAction="LeftClick"/>
-                        </TextBlock.InputBindings>
-                    </TextBlock>
+                    <TextBlock Style="{StaticResource Ed.PrimaryHeading}"  Margin="0" Text="Employee Directory"/>
                     <TextBlock FontSize="{StaticResource Ed.FontSize.SecondaryFontSize}" Text="The Ultimate People Directory Experience"/>
                 </WrapPanel>
                 <WrapPanel  Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right">
@@ -41,7 +37,7 @@
                     <TextBlock FontSize="{StaticResource Ed.FontSize.GreetUserFontSize}" VerticalAlignment="Bottom" Text=" Andrew Philips"/>
                     <Ellipse Margin="3 0 10 0" Width="50" Height="50" Grid.Column="2" >
                         <Ellipse.Fill>
-                            <ImageBrush  ImageSource="/Images/andrew-philips.png"/>
+                            <ImageBrush ImageSource="/EmployeeDirectoryMVVM;component/Images/andrew-philips.png"/>
                         </Ellipse.Fill>
                     </Ellipse>
                 </WrapPanel>
@@ -52,8 +48,23 @@
                 <TextBlock Margin="0 0 0 3" FontWeight="{StaticResource Ed.FontWeight.DemiBold}" FontSize="{StaticResource Ed.FontSize.SecondaryFontSize}" Text="Departments"/>
                 <ListBox Name="DepartmentsDiv" SelectedItem="{Binding SelectedDept}" ItemsSource="{Binding Departments}" ItemTemplate="{StaticResource GeneralFilterTemplate}" SelectionMode="Single" BorderBrush="Black" BorderThickness="0 0 0 1"/>
                 <TextBlock Margin="0 5 0 3" FontWeight="{StaticResource Ed.FontWeight.DemiBold}" FontSize="{StaticResource Ed.FontSize.SecondaryFontSize}" Text="Job Titles"/>
-                <ListBox Name="JobTitlesDiv" SelectedItem="{Binding SelectedJobTitle}" ItemsSource="{Binding JobTitles}" ItemTemplate="{StaticResource GeneralFilterTemplate}"  SelectionMode="Single" BorderThickness="0"/>
-                <Button HorizontalAlignment="Left"  Foreground="{StaticResource ED.Colors.PrimaryColour}" Background="white" BorderBrush="White" Content="view more"/>
+                <ListBox Name="JobTitlesDiv" SelectedItem="{Binding SelectedJobTitle}" ItemsSource="{Binding JobTitles}" ItemTemplate="{StaticResource GeneralFilterTemplate}"  
+                         SelectionMode="Single" BorderThickness="0">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsVisible}" Value="False">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                </ListBox>
+                <Button HorizontalAlignment="Left"
+                        Foreground="{StaticResource ED.Colors.PrimaryColour}" 
+                        Background="Transparent" 
+                        BorderBrush="Transparent" 
+                        Content="{Binding ViewMoreBtnContent}" Command="{Binding ViewMoreCommand}"/>
             </WrapPanel>
             <Grid Margin="20 5 0 0">
                 <Grid.RowDefinitions>
@@ -156,5 +167,6 @@
                 </WrapPanel>
             </Grid>
         </DockPanel>
+        
     </Grid>
 </UserControl>

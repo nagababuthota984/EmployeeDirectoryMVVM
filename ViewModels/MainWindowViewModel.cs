@@ -1,5 +1,4 @@
-﻿using EmployeeDirectoryMVVM.Data;
-using EmployeeDirectoryMVVM.Views;
+﻿using EmployeeDirectoryMVVM.Views;
 using System.ComponentModel;
 
 namespace EmployeeDirectoryMVVM.ViewModels

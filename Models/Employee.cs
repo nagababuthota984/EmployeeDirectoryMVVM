@@ -29,15 +29,15 @@ namespace EmployeeDirectoryMVVM.Models
 
         public string Error
         {
-            get { return null; }
-            
+            get { return string.Empty; }
+
         }
         public string this[string propertyName]
         {
             get
             {
-                string error=null;
-                switch(propertyName)
+                string error = string.Empty;
+                switch (propertyName)
                 {
                     case "FirstName":
                         if (string.IsNullOrWhiteSpace(FirstName))
@@ -64,7 +64,7 @@ namespace EmployeeDirectoryMVVM.Models
                             error = "Department shouldn't contain digits/special characters";
                         break;
                     case "ContactNumber":
-                        if (ContactNumber<0 || ContactNumber.ToString().Length!=10)
+                        if (ContactNumber < 0 || ContactNumber.ToString().Length != 10)
                             error = "Contact number should be of 10 digits";
                         else if (ContactNumber.ToString().Any(char.IsLetter))
                             error = "Contact number should only contain digits.";
@@ -110,8 +110,8 @@ namespace EmployeeDirectoryMVVM.Models
             EmploymentType = empType;
             Status = Status.Existing;
         }
-        public Employee(Employee employee) : 
-            this(employee.FirstName,employee.LastName,employee.Email,employee.Dob,employee.JobTitle,employee.Department,employee.ExperienceInYears,employee.ContactNumber,employee.Salary,employee.EmploymentType)
+        public Employee(Employee employee) :
+            this(employee.FirstName, employee.LastName, employee.Email, employee.Dob, employee.JobTitle, employee.Department, employee.ExperienceInYears, employee.ContactNumber, employee.Salary, employee.EmploymentType)
         {
         }
         private static string GenerateId()
@@ -120,7 +120,7 @@ namespace EmployeeDirectoryMVVM.Models
             do
             {
                 id = _random.Next(0, 99999).ToString("D4");
-            }while(EmployeeData.Employees.Any(emp=> emp.Id.Equals(id)));
+            } while (EmployeeData.Employees.Any(emp => emp.Id.Equals(id)));
             return id;
         }
 

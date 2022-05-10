@@ -2,6 +2,7 @@
 using EmployeeDirectoryMVVM.Models;
 using EmployeeDirectoryMVVM.Views;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -15,6 +16,7 @@ namespace EmployeeDirectoryMVVM.ViewModels
         #region Fields
         private string _searchInput;
         private string _filterInput;
+        private string _viewMoreBtnContent;
         private ObservableCollection<Employee> _employees;
         private ObservableCollection<GeneralFilter> _departments;
         private ObservableCollection<GeneralFilter> _jobtitles;
@@ -28,8 +30,10 @@ namespace EmployeeDirectoryMVVM.ViewModels
         public ICommand DeleteCommand { get; set; }
         public ICommand EditCommand { get; set; }
         public ICommand AddEmployeeCommand { get; set; }
+        public ICommand ViewMoreCommand { get; set; }
         #endregion
         #region Properties
+
         public string SearchInput
         {
             get { return _searchInput; }
@@ -56,6 +60,11 @@ namespace EmployeeDirectoryMVVM.ViewModels
             get { return _selectedDept; }
             set { _selectedDept = value; FilterEmployeesByDepartment(value); OnPropertyChange(nameof(SelectedDept)); }
         }
+        public string ViewMoreBtnContent
+        {
+            get { return _viewMoreBtnContent; }
+            set { _viewMoreBtnContent = value; OnPropertyChange(nameof(ViewMoreBtnContent)); }
+        }
         public ObservableCollection<Employee> FilteredEmployees
         {
             get { return _filteredEmployees; }
@@ -76,36 +85,65 @@ namespace EmployeeDirectoryMVVM.ViewModels
             get { return _jobtitles; }
             set { _jobtitles = value; OnPropertyChange(nameof(JobTitles)); }
         }
+
         #endregion
         public HomeViewModel()
         {
             Employees = new ObservableCollection<Employee>(EmployeeData.Employees);
             FilteredEmployees = Employees;
             Departments = new ObservableCollection<GeneralFilter>(EmployeeData.Departments);
-            JobTitles = new ObservableCollection<GeneralFilter>(EmployeeData.JobTitles);
             DeleteCommand = new CommandBase(OnDelete);
             EditCommand = new CommandBase(OnEditEmp);
             AddEmployeeCommand = new CommandBase(OnAddEmp);
+            ViewMoreCommand = new CommandBase(OnViewMore);
+            ViewMoreBtnContent = "view more";
             FilterCategories = Enum.GetNames(typeof(FilterCategories));
+            FilterInput = FilterCategories[0];
+            LoadJobTitles();
+
+        }
+
+        private void LoadJobTitles()
+        {
+            if (EmployeeData.JobTitles.Count >= 6)
+                EmployeeData.JobTitles.Skip(6).ToList().ForEach(job=> job.IsVisible = false);
+            JobTitles = new(EmployeeData.JobTitles);
+        }
+
+        private void OnViewMore()
+        {
+            if (ViewMoreBtnContent.Equals("view more", StringComparison.OrdinalIgnoreCase))
+            {
+                JobTitles.Skip(6).ToList().ForEach(job=> job.IsVisible = true);
+                ViewMoreBtnContent = "view less";
+            }
+            else
+            {
+                JobTitles.Skip(6).ToList().ForEach(job => job.IsVisible = false);
+                ViewMoreBtnContent = "view more";
+            }
         }
 
         private void OnAddEmp()
         {
-            MainWindowViewModel.CurrentView = new AddAndEditEmpView()
+            Employee emp = new();
+            MainWindowViewModel.CurrentView = new AddEditEmpView()
             {
-                DataContext = new AddEditEmpViewModel("New Employee Details","Add Employee",new Employee())
+                DataContext = new AddEditEmpViewModel("New Employee Details", "Add Employee", emp)
             };
         }
         private void OnEditEmp()
         {
-            MainWindowViewModel.CurrentView = new AddAndEditEmpView()
+
+            MainWindowViewModel.CurrentView = new AddEditEmpView()
             {
-                DataContext = new AddEditEmpViewModel("Edit Employee Details","Update",SelectedEmployee)
+                DataContext = new AddEditEmpViewModel("Edit Employee Details", "Update", SelectedEmployee)
             };
         }
         public void OnDelete()
         {
-            if(MessageBoxResult.Yes == MessageBox.Show($"Are you sure you want to delete {SelectedEmployee.PreferredName}?","Delete Employee",MessageBoxButton.YesNo))
+
+            if (MessageBoxResult.Yes == MessageBox.Show($"Are you sure you want to delete {SelectedEmployee.PreferredName}?", "Delete Employee", MessageBoxButton.YesNo))
                 Employees.Remove(SelectedEmployee);
         }
 

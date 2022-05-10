@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewmodels="clr-namespace:EmployeeDirectoryMVVM.ViewModels"
         mc:Ignorable="d"
-        Title="Employee Directory" MinHeight="600" MinWidth="800">
+        Title="Employee Directory" MinHeight="600" MinWidth="900">
     <Window.DataContext>
         <viewmodels:MainWindowViewModel/>
     </Window.DataContext>
