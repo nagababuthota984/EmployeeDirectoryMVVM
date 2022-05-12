@@ -2,9 +2,11 @@
 using EmployeeDirectoryMVVM.Models;
 using EmployeeDirectoryMVVM.Views;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using static EmployeeDirectoryMVVM.Models.Enums;
 
 namespace EmployeeDirectoryMVVM.ViewModels
 {
@@ -51,24 +53,11 @@ namespace EmployeeDirectoryMVVM.ViewModels
             if (!string.IsNullOrWhiteSpace(okBtnContent))
             {
                 if (OkBtnContent.Equals("Add Employee", StringComparison.OrdinalIgnoreCase))
-                    OkCommand = new CommandBase(OnAddEmp,CanAddEmp);
+                    OkCommand = new CommandBase(OnAddEmp);
                 else
-                    OkCommand = new CommandBase(OnUpdate,CanUpdate);
+                    OkCommand = new CommandBase(OnUpdate);
             }
         }
-
-        private bool CanUpdate()
-        {
-            //validation goes here.
-            return true;
-        }
-
-        private bool CanAddEmp()
-        {
-            //validation goes here
-            return true;
-        }
-
         private void OnUpdate()
         {
             EmployeeData.Employees.Remove(EmployeeData.Employees.FirstOrDefault(emp => emp.Id.Equals(SelectedEmployee.Id, StringComparison.OrdinalIgnoreCase)));
@@ -79,12 +68,36 @@ namespace EmployeeDirectoryMVVM.ViewModels
         }
         private void OnAddEmp()
         {
+            AddJobTitle(SelectedEmployee.JobTitle);
+            AddDepartment(SelectedEmployee.Department);
             EmployeeData.Employees.Add(new(SelectedEmployee));
             JsonHelper.WriteToJson<Employee>();
+            JsonHelper.WriteToJson<GeneralFilter>();
             MessageBox.Show($"Employee has been added succesfully.", "Employee Added");
             OnCancel();
         }
-
+        private static void AddJobTitle(string jobTitle)
+        {
+            if (!string.IsNullOrEmpty(jobTitle))
+            {
+                GeneralFilter job = EmployeeData.JobTitles.FirstOrDefault(jt =>jt.Category==GeneralFilterCategories.JobTitle && jt.Name.Equals(jobTitle, StringComparison.OrdinalIgnoreCase));
+                if (job != null)
+                    job.Count += 1;
+                else
+                    EmployeeData.JobTitles.Add(new GeneralFilter() { Name=jobTitle,Count=1,Category=GeneralFilterCategories.JobTitle,IsVisible=true });
+            }
+        }
+        private static void AddDepartment(string department)
+        {
+            if (!string.IsNullOrEmpty(department))
+            {
+                GeneralFilter dept = EmployeeData.Departments.FirstOrDefault(jt => jt.Category == GeneralFilterCategories.Department && jt.Name.Equals(department, StringComparison.OrdinalIgnoreCase));
+                if (dept != null)
+                    dept.Count += 1;
+                else
+                    EmployeeData.JobTitles.Add(new GeneralFilter() { Name = department, Count = 1, Category = GeneralFilterCategories.Department, IsVisible = true });
+            }
+        }
         private void OnCancel()
         {
             MainWindowViewModel.CurrentView = new HomeView();

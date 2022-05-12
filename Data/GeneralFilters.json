@@ -1,73 +1,93 @@
 [
   {
     "Name": "IT Department",
-    "Count": 8,
-    "Category": 0
+    "Count": 9,
+    "Category": 0,
+    "IsVisible": true
   },
   {
     "Name": "HR Department",
-    "Count": 2,
-    "Category": 0
+    "Count": 3,
+    "Category": 0,
+    "IsVisible": true
   },
   {
     "Name": "UX Department",
     "Count": 1,
-    "Category": 0
+    "Category": 0,
+    "IsVisible": true
   }
 ,
   {
-    "Name": "Sharepoint Practice Head",
-    "Count": 0,
-    "Category": 1
-  },
-  {
     "Name": "Web Developer",
     "Count": 1,
-    "Category": 1
+    "Category": 1,
+    "IsVisible": true
   },
   {
     "Name": "Operations Manager",
     "Count": 1,
-    "Category": 1
+    "Category": 1,
+    "IsVisible": true
   },
   {
     "Name": "Product Manager",
     "Count": 1,
-    "Category": 1
+    "Category": 1,
+    "IsVisible": true
   },
   {
     "Name": "Software Engineer",
     "Count": 1,
-    "Category": 1
+    "Category": 1,
+    "IsVisible": true
   },
   {
     "Name": "Lead Engineer Dot Net",
     "Count": 1,
-    "Category": 1
+    "Category": 1,
+    "IsVisible": true
   },
   {
     "Name": "UI Designer",
     "Count": 1,
-    "Category": 1
+    "Category": 1,
+    "IsVisible": true
   },
   {
     "Name": "Talent Magnet Jr.",
     "Count": 1,
-    "Category": 1
+    "Category": 1,
+    "IsVisible": false
   },
   {
     "Name": "Junior Software Developer",
     "Count": 1,
-    "Category": 1
+    "Category": 1,
+    "IsVisible": false
   },
   {
     "Name": "Head HR",
     "Count": 1,
-    "Category": 1
+    "Category": 1,
+    "IsVisible": false
   },
   {
     "Name": "Developer",
     "Count": 2,
-    "Category": 1
+    "Category": 1,
+    "IsVisible": false
+  },
+  {
+    "Name": "Consultant",
+    "Count": 1,
+    "Category": 1,
+    "IsVisible": false
+  },
+  {
+    "Name": "DBA",
+    "Count": 1,
+    "Category": 1,
+    "IsVisible": true
   }
 ]

@@ -96,6 +96,7 @@
         <Setter Property="Width" Value="125"/>
         <Setter Property="Margin" Value="0 0 15 0"/>
         <Setter Property="Cursor" Value="Hand"/>
+        
     </Style>
     <Style x:Key="Ed.Buttons.DeleteStyle" TargetType="Button" BasedOn="{StaticResource Ed.Buttons.EditDeleteBtnStyle}">
         <Setter Property="Background" Value="OrangeRed"></Setter>

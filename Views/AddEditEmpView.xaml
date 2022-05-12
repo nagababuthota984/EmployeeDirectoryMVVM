@@ -5,7 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" 
              MinWidth="1300" MinHeight="450">
-    
+
     <Grid DataContext="{Binding SelectedEmployee,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Left" Margin="20" Grid.IsSharedSizeScope="True" >
         <Grid.ColumnDefinitions>
             <ColumnDefinition  SharedSizeGroup="colGroup" />
@@ -40,8 +40,30 @@
         <TextBlock Style="{StaticResource Ed.Labels.FormLabelText }" Grid.Row="3" Grid.Column="2" Text="Contact Number" />
         <TextBox Text="{Binding ContactNumber, ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Ed.TextBoxStyle}" Name="contactNumber"  Grid.Row="3" Grid.Column="2"/>
         <Button Name="SubmitBtn" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type UserControl}},Path=DataContext.OkCommand}" 
-                Style="{StaticResource Ed.Buttons.AddEmp}" Grid.Row="4" HorizontalAlignment="Left"
-                Content="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}},Path=DataContext.OkBtnContent}"/>
+                Grid.Row="4" HorizontalAlignment="Left"
+                Content="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}},Path=DataContext.OkBtnContent}">
+            <Button.Style>
+                <Style TargetType="Button" BasedOn="{StaticResource Ed.Buttons.AddEmp}">
+                    <Setter Property="IsEnabled" Value="False"/>
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=(Validation.HasError),ElementName=fname}" Value="False"/>
+                                <Condition Binding="{Binding Path=(Validation.HasError),ElementName=lname}" Value="False"/>
+                                <Condition Binding="{Binding Path=(Validation.HasError),ElementName=jobtitle}" Value="False"/>
+                                <Condition Binding="{Binding Path=(Validation.HasError),ElementName=department}" Value="False"/>
+                                <Condition Binding="{Binding Path=(Validation.HasError),ElementName=contactNumber}" Value="False"/>
+                                <Condition Binding="{Binding Path=(Validation.HasError),ElementName=experience}" Value="False"/>
+                                <Condition Binding="{Binding Path=(Validation.HasError),ElementName=salary}" Value="False"/>
+                                <Condition Binding="{Binding Path=(Validation.HasError),ElementName=email}" Value="False"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="IsEnabled" Value="True"/>
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+
         <Button  Name="CancelBtn"
                  Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl},Path=DataContext.CancelCommand}"
                  Content="Cancel"  Style="{StaticResource Ed.Buttons.Cancel}" Grid.Row="4" HorizontalAlignment="Right" Margin="0 0 20 0"  />
